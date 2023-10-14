@@ -6,6 +6,7 @@ public class string {
 		// TODO Auto-generated method stub
 		String Face="Facebook";
 		System.out.println(Face);
+
 	}
 
 }
