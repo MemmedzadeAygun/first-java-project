@@ -1,9 +1,6 @@
 package Arrays;
 
-import java.util.Arrays;
-import java.util.Collections;
 
-@SuppressWarnings("unused")
 public class ArraysDemoHome {
 
 	public static void main(String[] args) {
@@ -48,18 +45,11 @@ public class ArraysDemoHome {
 			}
 		}
 		
-		Arrays.sort(numbers);
-		Collections.reverseOrder();
-		for(int i:numbers) {
-			System.out.print(i+" ");
-		}
-		
 		for(int eded:numbers) {
 			System.out.print(eded);
 			System.out.print(" ,");
 		}
-		
-			
+				
 	}
 
 }

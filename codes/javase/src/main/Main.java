@@ -10,6 +10,19 @@ public class Main {
 			}
 		}
 		
+		for(int a=1;a<=30;a++) {
+			if(a%3==0 && a%5==0) {
+				System.out.println(a);
+			}
+		}
+		
+		for(int b=1;b<=100;b++) {
+			if(b%2==0) {
+				System.out.println(b);
+			}
+		}
+		
+		
 		
 	}
 

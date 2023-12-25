@@ -10,7 +10,7 @@ public class MainClass {
 		Calculator myCalculator=new Calculator();
 		myCalculator.calculateCircleLength(myCircle);
 		System.out.println(myCircle.length);
-
+		
 	}
 
 }

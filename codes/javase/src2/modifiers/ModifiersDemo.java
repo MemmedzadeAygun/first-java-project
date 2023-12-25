@@ -10,6 +10,7 @@ public class ModifiersDemo {
 		person.defaultMethod("050-000-00-00");
 		
 		person.finalMethod("Xanim", 5);
+		
 	}
 
 }

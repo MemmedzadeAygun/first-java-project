@@ -19,7 +19,7 @@ public class StringTask {
 		
 		System.out.println("Index:"+message.indexOf("n")); //5
 		
-		System.out.println("LowerCase:"+message.toLowerCase()+message); //6
+		System.out.println("LowerCase:"+message.toLowerCase()); //6
 		System.out.println("UpperCase:"+message.toUpperCase()); //7
 		
 		System.out.println(message.contains("a")); //8
@@ -41,8 +41,6 @@ public class StringTask {
 		
 		String [] a1Array=name4.split(" ");	//16
 		System.out.println(Arrays.toString(a1Array));	//17
-		
-		
 		
 	}
 

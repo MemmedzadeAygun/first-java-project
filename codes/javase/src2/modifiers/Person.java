@@ -51,6 +51,7 @@ public class Person {
 	//final method
 	public final void finalMethod(final String name,int id) {
 		System.out.println("Name:"+name+" "+"Id:"+id);
+		
 	}
 	
 	//static variable
