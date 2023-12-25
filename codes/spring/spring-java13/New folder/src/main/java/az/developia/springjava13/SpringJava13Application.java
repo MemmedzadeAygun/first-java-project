@@ -20,6 +20,7 @@ public class SpringJava13Application {
 		String[] beanNames = a.getBeanDefinitionNames();
 		for (String beanName: beanNames) {
 			System.out.println(beanName);
+			
 		}
 	}
 
