@@ -1,14 +1,18 @@
-package az.developia.springjava13;
+package az.developia.springjava13.component;
 
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component(value="myPerson1")
 public class Person {
 	private int id;
 	private String name;
 	private int age;
 	private double salary;
+	@Autowired
+	@Qualifier(value = "myComp2")
+	private Computer computer;
 	
 	public Person() {
 		this.id=23;
@@ -48,6 +52,13 @@ public class Person {
 	public void setSalary(double salary) {
 		this.salary = salary;
 	}
-	
+
+	public Computer getComputer() {
+		return computer;
+	}
+
+	public void setComputer(Computer computer) {
+		this.computer = computer;
+	}
 	
 }
