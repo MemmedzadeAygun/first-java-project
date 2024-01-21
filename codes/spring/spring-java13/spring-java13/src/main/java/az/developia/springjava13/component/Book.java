@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Size;
 @Table(name="books")
 public class Book {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY) //id sahesinin avtomatik artan deyere malik olmasina sebeb olur.
 	private Integer id;
 	
 	@Size(min=2,max=40,message="ad min 2 max 40 simvol ola biler")

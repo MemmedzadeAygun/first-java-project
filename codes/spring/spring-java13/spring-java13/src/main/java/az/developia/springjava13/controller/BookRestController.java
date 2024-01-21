@@ -23,12 +23,11 @@ public class BookRestController {
 	public void add(@Valid @RequestBody Book s,BindingResult br) {
 		if(br.hasErrors())
 		{
-			throw new OurRuntimeException(br);
-			
+			throw new OurRuntimeException(br," ");
 		}
-		System.out.println(s);
+		//System.out.println(s);
 		repository.save(s);
-		
 	}
-	
 }
+
+//Qeyd- @RequestBody annotasiyasi JSON melumatlarini avtomatik Java sinifine cevirir. 
