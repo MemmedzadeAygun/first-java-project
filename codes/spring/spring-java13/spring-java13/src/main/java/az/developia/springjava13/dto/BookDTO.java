@@ -1,0 +1,60 @@
+package az.developia.springjava13.dto;
+
+import jakarta.validation.constraints.Size;
+
+public class BookDTO {
+
+	private Integer id;
+
+	@Size(min = 2, max = 40, message = "ad min 2 max 40 simvol ola biler")
+	private String name;
+
+	@Size(min = 2, max = 40, message = "ad min 2 max 40 simvol ola biler")
+	private Integer price;
+
+	@Size(min = 2, max = 40, message = "ad min 2 max 40 simvol ola biler")
+	private String author;
+
+	private Integer pageCount;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public Integer getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(Integer pageCount) {
+		this.pageCount = pageCount;
+	}
+
+}
