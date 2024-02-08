@@ -1,6 +1,5 @@
 package az.developia.springjava13.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +23,10 @@ import az.developia.springjava13.component.StudentEntity;
 import az.developia.springjava13.component.TeacherEntity;
 import az.developia.springjava13.dto.StudentDTO;
 import az.developia.springjava13.exception.OurRuntimeException;
+import az.developia.springjava13.repository.AuthorityRepository;
 import az.developia.springjava13.repository.StudentRepository;
 import az.developia.springjava13.repository.TeacherRepository;
+import az.developia.springjava13.repository.UserRepository;
 
 @RestController
 @RequestMapping(path = "/students")
@@ -33,6 +34,12 @@ public class StudentRestController {
 
 	@Autowired
 	private StudentRepository repository;
+	
+	@Autowired
+	private UserRepository userrepository;
+	
+	@Autowired
+	private AuthorityRepository authorityrepository;
 	
 	@Autowired
 	private TeacherRepository teacherrepository;
@@ -48,18 +55,21 @@ public class StudentRestController {
 		
 		List<StudentEntity> list=repository.findAllByTeacherId(teacherId);
 		
-		//List<StudentEntity> collect=new ArrayList<>();
-	//	for(StudentEntity s:list) {
-	//		if(s.getId()%2==0) {
-		//		collect.add(s);
-	//		}
-	//	}
+		list.stream().map(s->{
+			return s.getName();
+		}).filter(s->
+			s.contains("a")
+		)
 		
+		.forEach(System.out::println);
+		
+//		for(StudentEntity s: list) {
+//			System.out.println(s.getName());
+//		}
 		
 		response.setStudents(repository.findAll());
 		response.setUsername("Aygun");
-		return response;
-
+		return response;	
 	}
 
 	@PostMapping
@@ -133,13 +143,33 @@ public class StudentRestController {
 	public void delete(@PathVariable Integer id) {
 		// id null
 		// id not found
+		
+		String username=SecurityContextHolder.getContext().getAuthentication().getName();
+		TeacherEntity operator=TeacherRepository.findByUsername(username);
+		if(operator==null) {
+			throw new OurRuntimeException(null, "muellim tapilmadi");
+		}
+		Integer teacherId=operator.getId();
+		
 
-		if (id == null || id == 0) {
+		if (id == null || id <= 0) {
 			throw new OurRuntimeException(null, "id mutleqdir");
 		}
 
-		if (repository.findById(id).isPresent()) { // olmayan id'ye muraciet etdikde mes.999
-			repository.deleteById(id);
+		Optional<StudentEntity> finded=repository.findById(id);
+		//StudentEntity finded1=repository.findById(id).orElseThrow(()->new OurRuntimeException(null,"Bu telebeni sile bilmezsen"));
+		if (finded.isPresent()) { // olmayan id'ye muraciet etdikde mes.999
+			StudentEntity en=finded.get();  //Optional get methodu bize bir student obyekti qaytarir
+			if(en.getTeacherId()==teacherId) {
+				repository.deleteById(id);
+				userrepository.deleteById(en.getUsername());
+				authorityrepository.deleteUserAuthorities(en.getUsername());
+				
+			}else {
+				throw new OurRuntimeException(null,"Bu telebeni sile bilmezsen");
+			}
+			
+	
 		} else {
 			throw new OurRuntimeException(null, "bu id tapilmadi");
 		}

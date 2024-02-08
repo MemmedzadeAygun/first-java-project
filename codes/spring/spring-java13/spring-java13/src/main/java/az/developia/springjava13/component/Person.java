@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Component(value="myPerson1")
+@Component(value = "myPerson1")
 public class Person {
 	private int id;
 	private String name;
@@ -13,12 +13,12 @@ public class Person {
 	@Autowired
 	@Qualifier(value = "myComp2")
 	private Computer computer;
-	
+
 	public Person() {
-		this.id=23;
-		this.name="Aygun";
-		this.age=19;
-		this.salary=3000;
+		this.id = 23;
+		this.name = "Aygun";
+		this.age = 19;
+		this.salary = 3000;
 	}
 
 	public int getId() {
@@ -60,5 +60,11 @@ public class Person {
 	public void setComputer(Computer computer) {
 		this.computer = computer;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", age=" + age + ", salary=" + salary + ", computer=" + computer
+				+ "]";
+	}
+
 }

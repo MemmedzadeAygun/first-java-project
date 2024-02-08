@@ -1,5 +1,6 @@
 package az.developia.springjava13.dto;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -9,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StudentDTO {
-	private Integer id;
 
 	@Size(min = 2, max = 40, message = "Ad min 2 max 40 simvol ola biler")
 	private String name;
@@ -18,6 +18,7 @@ public class StudentDTO {
 	private String surname;
 
 	@Size(min = 2, max = 40, message = "Username min 2 max 40 simvol ola biler")
+	@NotNull
 	private String username;
 
 	@Size(min = 2, max = 40, message = "Password min 2 max 40 simvol ola biler")

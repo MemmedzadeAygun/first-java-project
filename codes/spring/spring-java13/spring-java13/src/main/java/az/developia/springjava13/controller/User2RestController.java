@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import az.developia.springjava13.component.SalesmanEntity;
 import az.developia.springjava13.dto.SalesmanDTO;
 import az.developia.springjava13.entity.User2Entity;
-import az.developia.springjava13.entity.UserEntity;
 import az.developia.springjava13.exception.OurRuntimeException;
 import az.developia.springjava13.repository.SalesmanRepository;
 import az.developia.springjava13.repository.User2Repository;
@@ -34,7 +33,7 @@ public class User2RestController {
 		
 		Optional<User2Entity> findById = user2Repository.findById(a.getUsername());
 
-		if (findById.isPresent()) { // br- burda validasiya ile bagli sehv deyil ona gore binding result null edilir
+		if (findById.isPresent()) { 
 			throw new OurRuntimeException(null, "bu username artiq var");
 		}
 

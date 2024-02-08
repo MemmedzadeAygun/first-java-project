@@ -1,56 +1,37 @@
 package az.developia.springjava13.component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+import lombok.Getter;
+import lombok.Setter;
 
 @Component
 @Scope(value = "prototype")
+@Getter
+@Setter
 public class Home {
-private Integer id;
-private String address;
-private String color;
+	private Integer id;
+	private String address;
+	private String color;
 
-public Home() {
-	System.out.println("Home object created");
-	this.id = 30;
-	this.address = "A21";
-	this.color = "Grey";
-}
+	public Home() {
+		System.out.println("Home object created");
+		this.id = 30;
+		this.address = "A21";
+		this.color = "Grey";
+	}
 
-public Integer getId() {
-	return id;
-}
+	@PostConstruct
+	public void init() {
+		System.out.println("init method");
+	}
 
-public void setId(Integer id) {
-	this.id = id;
+	@PreDestroy
+	public void destroy() {
+		System.out.println("destroy method");
+	}
 }
-
-public String getAddress() {
-	return address;
-}
-
-public void setAddress(String address) {
-	this.address = address;
-}
-
-public String getColor() {
-	return color;
-}
-
-public void setColor(String color) {
-	this.color = color;
-}
-@PostConstruct
-public void init() {
-	System.out.println("init method");
-}
-@PreDestroy
-public void destroy() {
-	System.out.println("destroy method");
-}
-}
-
-
