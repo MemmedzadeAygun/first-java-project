@@ -40,5 +40,4 @@ public class ExceptionHandler2 {
 		r.setMessage(e.getMessage());
 		return r;
 	}
-	
 }

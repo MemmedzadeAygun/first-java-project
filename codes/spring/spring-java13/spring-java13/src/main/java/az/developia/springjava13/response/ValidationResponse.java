@@ -1,20 +1,12 @@
 package az.developia.springjava13.response;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ValidationResponse {
 private String field;
 private String message;
-
-public String getField() {
-	return field;
-}
-public void setField(String field) {
-	this.field = field;
-}
-public String getMessage() {
-	return message;
-}
-public void setMessage(String message) {
-	this.message = message;
-}
 
 }

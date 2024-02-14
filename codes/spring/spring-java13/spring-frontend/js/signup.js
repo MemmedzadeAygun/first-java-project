@@ -24,7 +24,7 @@ let request=JSON.stringify(teacherObject);  //bu forma artiq obyekti setir olara
 
     //3.bu obyekti apiye gonder
 let xml=new XMLHttpRequest();
-xml.open('POST','http://localhost:8080/users/teacher',true);
+xml.open('POST','http://localhost:8084/users/teacher',true);
 xml.setRequestHeader('Content-type','application/json'); //Bu postman da secdiyimiz raw ve json'un evezine yazdigimiz koddur
 xml.send(request);
     

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,9 +28,13 @@ import az.developia.springjava13.repository.AuthorityRepository;
 import az.developia.springjava13.repository.StudentRepository;
 import az.developia.springjava13.repository.TeacherRepository;
 import az.developia.springjava13.repository.UserRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(path = "/students")
+@CrossOrigin(origins = "*")
+@Api(description = "Telebelerle bagli servisler buradadir")
 public class StudentRestController {
 
 	@Autowired
@@ -45,35 +50,39 @@ public class StudentRestController {
 	private TeacherRepository teacherrepository;
 
 	@GetMapping
-	@PreAuthorize(value="hasAuthority('ROLE_GET_STUDENT')")
+	//@PreAuthorize(value="hasAuthority('ROLE_GET_STUDENT')")
+	@ApiOperation(notes="",value = "Teacher id'ne gore butun telebeleri qaytaran api")
+	
 	public StudentResponse getStudents() {
 		StudentResponse response = new StudentResponse();
-		String username=SecurityContextHolder.getContext().getAuthentication().getName();  //Telebeni qeyd eden muellimin username'ni qaytarir
-		TeacherEntity operatorTeacher=TeacherRepository.findByUsername(username);
-		Integer teacherId=operatorTeacher.getId();
+//		String username=SecurityContextHolder.getContext().getAuthentication().getName();  //Telebeni qeyd eden muellimin username'ni qaytarir
+//		TeacherEntity operatorTeacher=teacherrepository.findByUsername(username);
+//		Integer teacherId=operatorTeacher.getId();
 		
 		
-		List<StudentEntity> list=repository.findAllByTeacherId(teacherId);
-		
-		list.stream().map(s->{
-			return s.getName();
-		}).filter(s->
-			s.contains("a")
-		)
-		
-		.forEach(System.out::println);
+//		List<StudentEntity> list=repository.findAll();
+//		
+//		list.stream().map(s->{
+//			return s.getName();
+//		})
+//		.filter(s->
+//		s.contains("A")
+//	)
+//		
+//		.forEach(System.out::println);
 		
 //		for(StudentEntity s: list) {
 //			System.out.println(s.getName());
 //		}
 		
 		response.setStudents(repository.findAll());
-		response.setUsername("Aygun");
+		//response.setUsername("Aygun");
 		return response;	
 	}
 
 	@PostMapping
 	@PreAuthorize(value="hasAuthority('ROLE_ADD_STUDENT')")
+	@ApiOperation(value = "Telebeni qeydiyyat etmek uchun olan api")
 	public void add(@Valid @RequestBody StudentDTO s, BindingResult br) {
 		if (br.hasErrors()) {
 			throw new OurRuntimeException(br, "Melumatlarin tamligi pozulub");
@@ -81,7 +90,7 @@ public class StudentRestController {
 		// System.out.println(s);
 		
 		String username=SecurityContextHolder.getContext().getAuthentication().getName();  //Telebeni qeyd eden muellimin username'ni qaytarir
-		TeacherEntity operatorTeacher=TeacherRepository.findByUsername(username);
+		TeacherEntity operatorTeacher=teacherrepository.findByUsername(username);
 		Integer teacherId=operatorTeacher.getId();
 		
 		if(s.getTeacherId()!=teacherId) {
@@ -115,6 +124,7 @@ public class StudentRestController {
 	// 0, null, 10-not found, found
 	@PutMapping
 	@PreAuthorize(value="hasAuthority('ROLE_UPDATE_STUDENT')")
+	@ApiOperation(value="Telebe melumatlarini update etmek ucun olan api")
 	public void update(@Valid @RequestBody StudentEntity s, BindingResult br) {
 		if (br.hasErrors()) {
 			throw new OurRuntimeException(br, "Melumatlarin tamligi pozulub");
@@ -140,12 +150,13 @@ public class StudentRestController {
 	// /students/8
 	@DeleteMapping(path = "/{id}")
 	@PreAuthorize(value="hasAuthority('ROLE_DELETE_STUDENT')")
+	@ApiOperation(value="Id'ne gore telebenin melumatlarini silen api")
 	public void delete(@PathVariable Integer id) {
 		// id null
 		// id not found
 		
 		String username=SecurityContextHolder.getContext().getAuthentication().getName();
-		TeacherEntity operator=TeacherRepository.findByUsername(username);
+		TeacherEntity operator=teacherrepository.findByUsername(username);
 		if(operator==null) {
 			throw new OurRuntimeException(null, "muellim tapilmadi");
 		}
@@ -156,28 +167,31 @@ public class StudentRestController {
 			throw new OurRuntimeException(null, "id mutleqdir");
 		}
 
-		Optional<StudentEntity> finded=repository.findById(id);
+		//Optional<StudentEntity> finded=repository.findById(id);
+		
+		StudentEntity en=repository
+				.findById(id).orElseThrow(()->
+				new OurRuntimeException(null,"Bu id tapilmadi"));
+		
+		
 		//StudentEntity finded1=repository.findById(id).orElseThrow(()->new OurRuntimeException(null,"Bu telebeni sile bilmezsen"));
-		if (finded.isPresent()) { // olmayan id'ye muraciet etdikde mes.999
-			StudentEntity en=finded.get();  //Optional get methodu bize bir student obyekti qaytarir
+		//if (finded.isPresent()) { // olmayan id'ye muraciet etdikde mes.999
+		//	StudentEntity en=finded.get();  //Optional get methodu bize bir student obyekti qaytarir
 			if(en.getTeacherId()==teacherId) {
 				repository.deleteById(id);
 				userrepository.deleteById(en.getUsername());
 				authorityrepository.deleteUserAuthorities(en.getUsername());
-				
-			}else {
+			}
+			else {
 				throw new OurRuntimeException(null,"Bu telebeni sile bilmezsen");
 			}
-			
-	
-		} else {
-			throw new OurRuntimeException(null, "bu id tapilmadi");
-		}
 
 	}
 
+	
 	@GetMapping(path = "/{id}")
 	@PreAuthorize(value="hasAuthority('ROLE_GET_STUDENT')")
+	@ApiOperation(value="Telebenin id'ne gore onun melumatlarini qaytaran api")
 	public StudentEntity findById(@PathVariable Integer id) {
 
 		if (id == null || id <= 0) {
