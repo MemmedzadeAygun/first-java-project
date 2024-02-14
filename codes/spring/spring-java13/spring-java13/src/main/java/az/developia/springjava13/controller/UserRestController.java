@@ -27,6 +27,7 @@ import az.developia.springjava13.repository.AuthorityRepository;
 import az.developia.springjava13.repository.StudentRepository;
 import az.developia.springjava13.repository.TeacherRepository;
 import az.developia.springjava13.repository.UserRepository;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -49,6 +50,7 @@ public class UserRestController {
 	private AuthorityRepository authorityRepository;
 
 	@PostMapping(path = "/teacher")
+	@ApiOperation(value="Muellimin muellim ve user olaraq qeydiyyati uchun olan api ve onun huquqlari")
 	public void createTeacher(@RequestBody TeacherDTO d) {
 
 		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
@@ -85,6 +87,7 @@ public class UserRestController {
 	}
 
 	@GetMapping(path = "/login")
+	@ApiOperation(value="Login prosesi")
 	public void login() {
 
 	}
@@ -92,6 +95,7 @@ public class UserRestController {
 	
 	@PostMapping(path = "/student")
 	@PreAuthorize(value="hasAuthority('ROLE_ADD_STUDENT')")
+	@ApiOperation(value="Student'in student ve user olaraq qeydiyyati uchun olan api,hemcinin onun huquqlari")
 	public void createStudent(@Valid @RequestBody StudentDTO d, BindingResult br) {
 		if(br.hasErrors()) {
 			throw new OurRuntimeException(br, "Melumatlarin tamligi pozulub");
@@ -109,7 +113,7 @@ public class UserRestController {
 		e.setUsername(d.getUsername());
 		
 		String username=SecurityContextHolder.getContext().getAuthentication().getName();  //Telebeni qeyd eden muellimin username'ni qaytarir
-		TeacherEntity operatorTeacher=TeacherRepository.findByUsername(username);
+		TeacherEntity operatorTeacher=teacherRepository.findByUsername(username);
 		Integer teacherId=operatorTeacher.getId();
 		
 		e.setTeacherId(teacherId);
@@ -132,7 +136,7 @@ public class UserRestController {
 		a1.setAuthority("ROLE_UPDATE_STUDENT");
 		authorityRepository.save(a1);
 		
+		//{noop} ile de password'u sifrelemek olar
+		
 	}
-
-
 }
