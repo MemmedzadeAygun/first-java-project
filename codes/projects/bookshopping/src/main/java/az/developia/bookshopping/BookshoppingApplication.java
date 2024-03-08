@@ -1,12 +1,13 @@
-package az.developia.studentcrud;
+package az.developia.bookshopping;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StudentCrudApplication {
+public class BookshoppingApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StudentCrudApplication.class, args);
+		SpringApplication.run(BookshoppingApplication.class, args);
 	}
+
 }

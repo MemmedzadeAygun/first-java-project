@@ -1,5 +1,8 @@
 var selectedStudentId = 0;
 var API_URL = "http://localhost:8084";
+var username=localStorage.getItem('username');
+var password=localStorage.getItem('password');
+var token="Basic "+window.btoa(username+":"+password);
 
 var studentNameInput = document.getElementById('student-name');
 var studentSurnameInput = document.getElementById('student-surname');
@@ -55,6 +58,7 @@ function onSaveStudent(event) {
 
     http.open("POST", API_URL + "/students", true);
     http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", token);
     http.send(JSON.stringify(studentObject));
 }
 
@@ -69,6 +73,8 @@ function loadAllStudents() {
     }
 
     http.open("GET", API_URL + "/students", true);
+    http.setRequestHeader("Authorization", token);
+
     http.send();
 }
 
@@ -91,6 +97,10 @@ function fillStudentsTable(students) {
         studentsTbodyHtml += "<button class='btn btn-secondary' onclick='onNoteStudent(" + student.id + ")' type='button' data-toggle='modal' data-target='#noteModal' "+" >Qeyd yaz</button></td></tr>";
     }
     studentsTbodyElement.innerHTML = studentsTbodyHtml;
+
+    $(document).ready(function(){
+        $('#students-table').DataTable();
+        });
 }
 
 loadAllStudents();
@@ -102,6 +112,7 @@ function onDeleteStudent(studentId) {
             loadAllStudents();
         }
         http.open("DELETE", API_URL + "/students/" + studentId, true);
+        http.setRequestHeader("Authorization", token);
         http.send();
     }
 }
@@ -117,6 +128,7 @@ function onEditStudent(studentId) {
         studentSurnameInput.value = studentobject.surname;
     }
     http.open("GET", API_URL + "/students/" + studentId, true);
+    http.setRequestHeader("Authorization", token);
     http.send();
 }
 
@@ -165,6 +177,7 @@ function onSaveStudentNote(event) {
 
     http.open("POST", API_URL + "/student-notes", true);
     http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", token);
     http.send(JSON.stringify(studentNoteObject));
 }
 
@@ -197,5 +210,6 @@ function loadAllStudentsNotes(studentId) {
     }
 
     http.open("GET", API_URL + "/student-notes/student/"+studentId, true);
+    http.setRequestHeader("Authorization", token);
     http.send();
 }
