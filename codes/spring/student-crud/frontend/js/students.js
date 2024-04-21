@@ -14,7 +14,7 @@ var headerTextElement = document.getElementById('header-text');
 var nameErrorElement=document.getElementById('error-name');
 var surnameErrorElement=document.getElementById('error-surname');
 
-var studentNoteInput = document.getElementById('student-note')
+var studentNoteInput = document.getElementById('student-note');
 
 function onSaveStudent(event) {
     event.preventDefault();
@@ -79,8 +79,6 @@ function loadAllStudents() {
 }
 
 function fillStudentsTable(students) {
-
-
 
     var studentsTbodyHtml = "";
     for (var i = 0; i < students.length; i++) {

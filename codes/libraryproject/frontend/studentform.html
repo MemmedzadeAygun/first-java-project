@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Tələbələr</title>
+</head>
+
+<body>
+    <div style="width: 30%; margin: auto;">
+        <h3 id="header-text"></h3>
+        <form action="studenttable.html" onsubmit="onSaveStudent(event)">
+            <div class="form-group">
+                <label for="student-username">Username</label>
+                <input id="student-username" class="form-control">
+                <div id="username-error" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="student-password">Password</label>
+                <input id="student-password" class="form-control">
+                <div id="password-error" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="student-name">Name</label>
+                <input id="student-name" class="form-control">
+                <div id="name-error" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="student-surname">Surname</label>
+                <input id="student-surname" class="form-control">
+                <div id="surname-error" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="student-phone">Phone</label>
+                <input id="student-phone" class="form-control">
+                <div id="phone-error" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="student-addres">Addres</label>
+                <input id="student-addres" class="form-control">
+                <div id="addres-error" class="error"></div>
+            </div>
+
+            <input type="submit" value="Yadda saxla" class="btn btn-success">
+        </form>
+    </div>
+
+    <script src="script.js/student.js">
+       
+    </script>
+</body>
+
+</html>
