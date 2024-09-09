@@ -1,0 +1,43 @@
+.form{
+    width: 500px;
+    height: 500px;
+    background-color: green;
+    /* border: 5px solid green; */
+    margin-top: 90px;
+    border-radius: 20px;
+}
+
+.form-body{
+    width: 350px;
+    height: 300px;
+    padding-top: 100px;
+    padding-left: 100px;
+}
+.form-group{
+    display: flex;
+    flex-direction: row;
+}
+
+.form-body .form-group{
+    padding: 10px 10px 10px 10px;
+}
+
+.form-group .form-control{
+    width: 170px;
+    height: 20px;
+   border-radius: 8px;
+   background-color: #f3f1f1;
+   /* border: none; */
+}
+.form-group label{
+    padding-right: 20px;
+}
+
+/* .form-group .form-control{
+    padding: ;
+} */
+
+.error{
+    color: red;
+    font-weight: bold;
+}

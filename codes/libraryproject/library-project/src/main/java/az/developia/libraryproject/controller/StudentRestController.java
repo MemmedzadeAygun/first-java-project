@@ -23,13 +23,9 @@ public class StudentRestController {
 	
 	@GetMapping
 	public List<StudentModel> findAllStudent(){
-		return studentRepository.findAllByLibrarian(getUser());
+		return studentRepository.findAll();
 	}
 	
-	
-	
-	private String getUser() {
-		return SecurityContextHolder.getContext().getAuthentication().getName();
-	}
+
 	
 }

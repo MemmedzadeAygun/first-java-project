@@ -9,5 +9,4 @@ import az.developia.libraryproject.model.StudentModel;
 
 public interface StudentRepository extends JpaRepository<StudentModel, Integer> {
 
-	List<StudentModel> findAllByLibrarian(String librarian);
 }

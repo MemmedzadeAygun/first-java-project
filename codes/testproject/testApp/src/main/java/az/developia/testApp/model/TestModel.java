@@ -24,5 +24,4 @@ public class TestModel {
 	private String option_3;
 	private String option_4;
 	private String answer;
-	private String user;
 }

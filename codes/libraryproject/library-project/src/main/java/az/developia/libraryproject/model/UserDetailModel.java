@@ -9,13 +9,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="authorities")
+@Table(name="userdetail")
 @Getter
 @Setter
-public class AuthorityModel {
+public class UserDetailModel {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	private String name;
+	private String surname;
+	private String email;
 	private String username;
-	private String authority;
 }

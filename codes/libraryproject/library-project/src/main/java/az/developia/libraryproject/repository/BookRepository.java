@@ -8,5 +8,5 @@ import az.developia.libraryproject.model.BookModel;
 
 public interface BookRepository extends JpaRepository<BookModel, Integer>{
 
-	List<BookModel> findAllByLibrarian(String librarian);
+	
 }

@@ -21,8 +21,6 @@ public class TestRestController {
 
 	@PostMapping
 	public TestModel addTest(@RequestBody TestModel test) {
-		String user=SecurityContextHolder.getContext().getAuthentication().getName();
-		test.setUser(user);
 		return testRepository.save(test);
 	}
 }

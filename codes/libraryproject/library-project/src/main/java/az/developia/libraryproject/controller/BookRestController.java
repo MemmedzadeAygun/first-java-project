@@ -33,14 +33,13 @@ public class BookRestController {
 			throw new MyRuntimeException(result);
 		}
 		
-		book.setLibrarian(getUser());
 		return bookRepository.save(book);
 		
 	}
 	
 	@GetMapping
 	public List<BookModel> findAll(){
-		return bookRepository.findAllByLibrarian(getUser());
+		return bookRepository.findAll();
 	}
 	
 	@DeleteMapping(path="/{id}")
@@ -53,8 +52,5 @@ public class BookRestController {
 		return bookRepository.findById(id).get();
 	}
 	
-	private String getUser() {
-		return SecurityContextHolder.getContext().getAuthentication().getName();
-	}
 	
 }

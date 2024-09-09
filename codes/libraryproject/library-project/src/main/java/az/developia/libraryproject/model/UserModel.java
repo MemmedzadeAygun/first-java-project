@@ -16,5 +16,5 @@ public class UserModel {
 	private String username;
 	private String password;
 	private Integer enabled;
-	private String type;
+
 }

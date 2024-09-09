@@ -1,6 +1,8 @@
-var API_URL="http://localhost:8032";
+var API_URL="http://localhost:5555";
+
 var usernameInput=document.getElementById('username');
 var passwordInput=document.getElementById('password');
+
 
 function onLogin(event){
     event.preventDefault();
@@ -9,6 +11,7 @@ function onLogin(event){
 
     
     var http = new XMLHttpRequest();
+   
 
     http.onload=function(){
         if(this.status==401){
@@ -19,25 +22,11 @@ function onLogin(event){
             window.location.href="Home.html";
         }
     }
-    http.open("GET",API_URL+"/users/login",true);
+    http.open("GET",API_URL+"users/login",true);
     http.setRequestHeader("Authorization","Basic " + window.btoa(username+":"+password));
     http.send();
-    
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function onOpenSignupPage(){

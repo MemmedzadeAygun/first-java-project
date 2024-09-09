@@ -1,4 +1,4 @@
-var API_URL="http://localhost:8032";
+var API_URL="http://localhost:5555";
 
 function onSignup(event){
     event.preventDefault();

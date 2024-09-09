@@ -1,10 +1,6 @@
 package az.developia.libraryproject.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,16 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import az.developia.libraryproject.DTO.LibrarianDTO;
-import az.developia.libraryproject.DTO.StudentDTO;
-import az.developia.libraryproject.exception.MyRuntimeException;
-import az.developia.libraryproject.model.AuthorityModel;
-import az.developia.libraryproject.model.LibrarianModel;
-import az.developia.libraryproject.model.StudentModel;
+import az.developia.libraryproject.DTO.UserDTO;
+import az.developia.libraryproject.model.UserDetailModel;
 import az.developia.libraryproject.model.UserModel;
-import az.developia.libraryproject.repository.AuthorityRepository;
-import az.developia.libraryproject.repository.LibrarianRepository;
-import az.developia.libraryproject.repository.StudentRepository;
+import az.developia.libraryproject.repository.UserDetailRepository;
 import az.developia.libraryproject.repository.UserRepository;
 
 @RestController
@@ -34,45 +24,33 @@ public class UserRestcontroller {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private LibrarianRepository librarianRepository;
+	private UserDetailRepository userDetailRepository;
 	
-	@Autowired
-	private StudentRepository studentRepository;
-	
-	@Autowired
-	private AuthorityRepository authorityRepository;
 
-	
 	@PostMapping(path="/librarian")
-	public void createLibrarian(@RequestBody LibrarianDTO ldto) {
+	public void createUser(@RequestBody UserDTO udto) {
 		
 		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+
 		
-		LibrarianModel lmodel=new LibrarianModel();
-		lmodel.setId(ldto.getId());
-		lmodel.setName(ldto.getName());
-		lmodel.setSurname(ldto.getSurname());
-		lmodel.setPhone(ldto.getPhone());
-		lmodel.setAddres(ldto.getAddres());
-		lmodel.setUsername(ldto.getUsername());
-		librarianRepository.save(lmodel);
+		UserDetailModel userdetail=new UserDetailModel();
+		userdetail.setId(udto.getId());
+		userdetail.setName(udto.getName());
+		userdetail.setSurname(udto.getSurname());
+		userdetail.setEmail(udto.getEmail());
+		userdetail.setUsername(udto.getUsername());
+		userDetailRepository.save(userdetail);
+		
 		
 		
 		UserModel umodel=new UserModel();
-		umodel.setUsername(ldto.getUsername());
+		umodel.setUsername(udto.getUsername());
 		
-		String raw=ldto.getPassword();
+		String raw=udto.getPassword();
 		String pass="{bcrypt}"+encoder.encode(raw);
 		umodel.setPassword(pass);
-		umodel.setEnabled(1);
-		umodel.setType("librarian");
 		userRepository.save(umodel);
 		
-		
-		AuthorityModel amodel=new AuthorityModel();
-		amodel.setUsername(umodel.getUsername());
-		amodel.setAuthority("ROLE_ADD_STUDENT");
-		authorityRepository.save(amodel);
 		
 	}
 	
@@ -82,43 +60,37 @@ public class UserRestcontroller {
 		
 	}
 	
+//	
+//	@PostMapping(path="/student")
+//	@PreAuthorize(value="hasAuthority('ROLE_ADD_STUDENT')")
+//	public void createStudent(@RequestBody StudentDTO sdto) {
+//		
+//		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+//		
+//		StudentModel smodel=new StudentModel();
+//		smodel.setId(sdto.getId());
+//		smodel.setName(sdto.getName());
+//		smodel.setSurname(sdto.getSurname());
+//		smodel.setPhone(sdto.getPhone());
+//		smodel.setAddres(sdto.getAddres());
+//		smodel.setUsername(sdto.getUsername());
+//		smodel.setLibrarian(getUser());
+//		studentRepository.save(smodel);
+//		System.out.println(smodel);
+//		
+//		UserModel umodel=new UserModel();
+//		umodel.setUsername(sdto.getUsername());
+//		
+//		String raw=sdto.getPassword();
+//		String pass="{bcrypt}"+encoder.encode(raw);
+//		umodel.setPassword(pass);
+//		umodel.setEnabled(1);
+//		userRepository.save(umodel);
+//		
+		
+//	}
 	
-	@PostMapping(path="/student")
-	@PreAuthorize(value="hasAuthority('ROLE_ADD_STUDENT')")
-	public void createStudent(@RequestBody StudentDTO sdto) {
-		
-		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
-		
-		StudentModel smodel=new StudentModel();
-		smodel.setId(sdto.getId());
-		smodel.setName(sdto.getName());
-		smodel.setSurname(sdto.getSurname());
-		smodel.setPhone(sdto.getPhone());
-		smodel.setAddres(sdto.getAddres());
-		smodel.setUsername(sdto.getUsername());
-		smodel.setLibrarian(getUser());
-		studentRepository.save(smodel);
-		System.out.println(smodel);
-		
-		UserModel umodel=new UserModel();
-		umodel.setUsername(sdto.getUsername());
-		
-		String raw=sdto.getPassword();
-		String pass="{bcrypt}"+encoder.encode(raw);
-		umodel.setPassword(pass);
-		umodel.setEnabled(1);
-		umodel.setType("student");
-		userRepository.save(umodel);
-		
-		
-		AuthorityModel amodel=new AuthorityModel();
-		amodel.setUsername(umodel.getUsername());
-		amodel.setAuthority("ROLE_UPDATE_STUDENT");
-		authorityRepository.save(amodel);
-		
-	}
-	
-	private String getUser() {
-		return SecurityContextHolder.getContext().getAuthentication().getName();
-	}
+//	private String getUser() {
+//		return SecurityContextHolder.getContext().getAuthentication().getName();
+//	}
 }

@@ -1,0 +1,44 @@
+
+.y {
+    padding-right: 15px;
+    text-decoration: none !important;  
+}
+
+.x{
+    text-decoration: none !important;
+}
+
+.info{
+    margin-left: 850px;
+    margin-top: 20px;
+}
+
+
+#header{
+    height: 170px;
+}
+
+
+
+.row{
+    display: flex;
+    justify-content: space-between;
+}
+
+.row .metn{
+    font-weight: 600;
+    font-size: 50px;
+    padding: 50px 400px;
+    color: #F6F6F6;
+}
+
+
+body{
+    background-color: #F6F6F6;
+}
+
+.panel{
+    width: 250px;
+    height: 560px;
+    background-color:  green;
+}
